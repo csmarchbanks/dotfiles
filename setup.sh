@@ -16,6 +16,12 @@ fi
 
 link_file `pwd`/tmux.shared.conf ~/.tmux.shared.conf
 
-# neovim confi
+# neovim config
 mkdir -p ~/.config/nvim
 link_file `pwd`/config/nvim/init.vim ~/.config/nvim/init.vim
+link_file `pwd`/zshrc ~/.zshrc
+
+if [ "$(uname -s)" == "Darwin" ]; then
+  brew tap homebrew/bundle
+  brew bundle
+fi
