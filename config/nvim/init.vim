@@ -18,8 +18,8 @@ colorscheme molokai
 
 let mapleader = ","
 set number
-autocmd FileType go set tabstop=4|set noexpandtab|set shiftwidth=4 
 autocmd FileType * set tabstop=2|set shiftwidth=2|set expandtab
+autocmd FileType go set tabstop=4|set noexpandtab|set shiftwidth=4 
 set autowrite
 let g:go_list_type = "quickfix"
 map <C-n> :cnext<CR>
