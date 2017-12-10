@@ -56,7 +56,7 @@ plugins=(git)
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH=~/anaconda/bin:$PATH
 export PATH=~/bin:$PATH
-export PATH=$PATH":/usr/local/go/bin:~/go/bin"
+export PATH=$PATH":/usr/local/go/bin:"$HOME"/go/bin"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
