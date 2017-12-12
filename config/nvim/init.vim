@@ -4,6 +4,8 @@ Plug 'fatih/molokai'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'w0rp/ale'
 Plug 'pangloss/vim-javascript'
@@ -25,12 +27,17 @@ let g:ale_sign_error = '⤫'
 let g:ale_sign_warning = '⚠'
 let g:airline#extensions#ale#enabled = 1
 
-" deoplete config
+" deoplete/neosnippet config
 let g:deoplete#auto_complete_start_length = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 inoremap <expr><tab>  pumvisible() ? "\<C-n>" : "\<tab>"
 inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<s-tab>"
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+let g:go_snippet_engine = "neosnippet"
 
 let g:rehash256 = 1
 let g:molokai_original = 1
