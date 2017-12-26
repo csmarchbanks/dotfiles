@@ -13,6 +13,7 @@ Plug 'mxw/vim-jsx'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'sebdah/vim-delve'
 call plug#end()
 syntax on
 filetype plugin indent on
