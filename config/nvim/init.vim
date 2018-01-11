@@ -90,7 +90,10 @@ let g:go_auto_sameids = 1
 " autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git'
 
 " use jsx formatting in .js files
 let g:jsx_ext_required = 0
+
+" use more memory for syntax highlighting big files
+set mmp=2000 " default 1000
