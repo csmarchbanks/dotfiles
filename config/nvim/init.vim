@@ -14,6 +14,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'sebdah/vim-delve'
+Plug 'scrooloose/nerdtree'
 call plug#end()
 syntax on
 filetype plugin indent on
@@ -91,7 +92,7 @@ let g:go_auto_sameids = 1
 " autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git\|vendor'
 
 " use jsx formatting in .js files
 let g:jsx_ext_required = 0
