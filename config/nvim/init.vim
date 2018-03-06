@@ -15,6 +15,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'sebdah/vim-delve'
 Plug 'scrooloose/nerdtree'
+Plug 'google/vim-jsonnet'
+Plug 'airblade/vim-gitgutter'
 call plug#end()
 syntax on
 filetype plugin indent on
@@ -47,8 +49,11 @@ colorscheme molokai
 
 let mapleader = ","
 set number
-autocmd FileType * set tabstop=2|set shiftwidth=2|set expandtab
-autocmd FileType go set tabstop=4|set noexpandtab|set shiftwidth=4 
+autocmd FileType * setlocal tabstop=2|set shiftwidth=2|set expandtab
+autocmd FileType go setlocal tabstop=4|set noexpandtab|set shiftwidth=4 
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype jsonnet setlocal ts=2 sts=2 sw=2 expandtab
 set autowrite
 let g:go_list_type = "quickfix"
 map <C-n> :cnext<CR>
@@ -85,17 +90,15 @@ autocmd Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
 autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 autocmd FileType go nmap <Leader>i <Plug>(go-info)
 let g:go_auto_type_info = 1
-let g:go_auto_sameids = 1
-
-" autocmd FileType javascript set formatprg=prettier\ --stdin
-" autocmd BufWritePre *.js :normal gggqG
-" autocmd BufWritePre *.js exe "normal! gggqG\<C-o>\<C-o>"
+" let g:go_auto_sameids = 1
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|\.git\|vendor'
+let g:ctrlp_custom_ignore = 'node_modules/\|DS_Store\|\.git/\|vendor/\|dist/'
 
 " use jsx formatting in .js files
 let g:jsx_ext_required = 0
+
+let g:jsonnet_fmt_options = ' -i -n 2'
 
 " use more memory for syntax highlighting big files
 set mmp=2000 " default 1000
