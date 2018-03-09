@@ -54,6 +54,8 @@ autocmd FileType go setlocal tabstop=4|set noexpandtab|set shiftwidth=4
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype jsonnet setlocal ts=2 sts=2 sw=2 expandtab
+set ignorecase
+set smartcase
 set autowrite
 let g:go_list_type = "quickfix"
 map <C-n> :cnext<CR>
