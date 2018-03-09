@@ -1,0 +1,20 @@
+[alias]
+	br = branch
+	co = checkout
+	ci = commit
+	d = diff
+	dc = diff --cached
+	st = status
+	la = config --get-regexp alias
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+	lga = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit --all
+	old = for-each-ref refs/remotes/origin/ --sort=-committerdate --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+[push]
+	default = simple
+[merge]
+	conflictstyle = diff3
+[pull]
+	rebase = true
+[user]
+	email = csmarchbanks@gmail.com
+	name = Chris Marchbanks
