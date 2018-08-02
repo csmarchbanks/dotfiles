@@ -5,4 +5,4 @@ bind y run "tmux save-buffer - | reattach-to-user-namespace pbcopy"
 # source config common to osx and linux
 source .tmux.shared.conf
 
-source /usr/local/lib/python2.7/site-packages/powerline/bindings/tmux/powerline.conf
+source /usr/local/lib/python3.6/site-packages/powerline/bindings/tmux/powerline.conf

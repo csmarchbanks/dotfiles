@@ -2,7 +2,14 @@ call plug#begin()
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'fatih/molokai'
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
@@ -13,11 +20,13 @@ Plug 'mxw/vim-jsx'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'sebdah/vim-delve'
 Plug 'scrooloose/nerdtree'
 Plug 'google/vim-jsonnet'
 Plug 'airblade/vim-gitgutter'
+Plug 'wincent/terminus'
+Plug 'vimwiki/vimwiki'
 call plug#end()
+set nocompatible
 syntax on
 filetype plugin indent on
 
@@ -54,6 +63,7 @@ autocmd FileType go setlocal tabstop=4|set noexpandtab|set shiftwidth=4
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype jsonnet setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType make setlocal noexpandtab
 set ignorecase
 set smartcase
 set autowrite
@@ -77,6 +87,16 @@ autocmd FileType go nmap <leader>r  <Plug>(go-run)
 autocmd FileType go nmap <leader>t  <Plug>(go-test)
 autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
 autocmd FileType go nmap <Leader>u :GoReferrers<CR>
+
+autocmd FileType go nmap <Leader>ds :GoDebugStart<CR>
+autocmd FileType go nmap <Leader>dt :GoDebugTest<CR>
+autocmd FileType go nmap <Leader>dq :GoDebugStop<CR>
+autocmd FileType go nmap <Leader>db :GoDebugBreakpoint<CR>
+autocmd FileType go nmap <Leader>dc :GoDebugContinue<CR>
+autocmd FileType go nmap <Leader>dn :GoDebugNext<CR>
+autocmd FileType go nmap <Leader>ds :GoDebugStep<CR>
+autocmd FileType go nmap <Leader>ds :GoDebugStepOut<CR>
+
 let g:go_fmt_command = "goimports"
 let g:go_highlight_types = 1
 let g:go_highlight_functions = 1
@@ -100,7 +120,7 @@ let g:ctrlp_custom_ignore = 'node_modules/\|DS_Store\|\.git/\|vendor/\|dist/'
 " use jsx formatting in .js files
 let g:jsx_ext_required = 0
 
-let g:jsonnet_fmt_options = ' -i -n 2'
+let g:jsonnet_fmt_options = ' -i -n 2 --string-style s'
 
 " use more memory for syntax highlighting big files
 set mmp=2000 " default 1000
