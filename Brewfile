@@ -1,4 +1,5 @@
 brew 'git'
+brew 'python'
 brew 'neovim'
 brew 'tmux'
 brew 'reattach-to-user-namespace'

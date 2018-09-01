@@ -26,17 +26,11 @@ fi
 # install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-# tmux config
-if  [ "$(uname -s)" == "Darwin" ]; then
-  link_file `pwd`/tmux.conf.osx ~/.tmux.conf
-else
-  link_file `pwd`/tmux.conf.linux ~/.tmux.conf
-fi
-
-link_file `pwd`/tmux.shared.conf ~/.tmux.shared.conf
+link_file `pwd`/tmux.conf ~/.tmux.conf
 
 # neovim config
 mkdir -p ~/.config/nvim
 link_file `pwd`/config/nvim/init.vim ~/.config/nvim/init.vim
+link_file `pwd`/config/nvim/init.vim ~/.vimrc
 link_file `pwd`/zshrc ~/.zshrc
-
+link_file `pwd`/gitconfig ~/.gitconfig
