@@ -18,6 +18,7 @@ Plug 'w0rp/ale'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
@@ -25,6 +26,7 @@ Plug 'google/vim-jsonnet'
 Plug 'airblade/vim-gitgutter'
 Plug 'wincent/terminus'
 Plug 'vimwiki/vimwiki'
+Plug 'vim-scripts/grep.vim'
 call plug#end()
 set nocompatible
 syntax on
@@ -62,6 +64,7 @@ autocmd FileType * setlocal tabstop=2|set shiftwidth=2|set expandtab
 autocmd FileType go setlocal tabstop=4|set noexpandtab|set shiftwidth=4 
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype typescript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype jsonnet setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType make setlocal noexpandtab
 set ignorecase
@@ -124,3 +127,42 @@ let g:jsonnet_fmt_options = ' -i -n 2 --string-style s'
 
 " use more memory for syntax highlighting big files
 set mmp=2000 " default 1000
+
+"*****************************************************************************
+"" Abbreviations
+"*****************************************************************************
+"" no one is really happy until you have this shortcuts
+cnoreabbrev W! w!
+cnoreabbrev Q! q!
+cnoreabbrev Qall! qall!
+cnoreabbrev Wq wq
+cnoreabbrev Wa wa
+cnoreabbrev wQ wq
+cnoreabbrev WQ wq
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev Qall qall
+
+" grep.vim
+nnoremap <silent> <leader>f :Rgrep<CR>
+let Grep_Default_Options = '-IR'
+let Grep_Skip_Files = '*.log *.db'
+let Grep_Skip_Dirs = '.git node_modules'
+
+"" Git
+noremap <Leader>ga :Gwrite<CR>
+noremap <Leader>gc :Gcommit<CR>
+noremap <Leader>gsh :Gpush<CR>
+noremap <Leader>gll :Gpull<CR>
+noremap <Leader>gs :Gstatus<CR>
+noremap <Leader>gb :Gblame<CR>
+noremap <Leader>gd :Gvdiff<CR>
+noremap <Leader>gr :Gremove<CR>
+
+set wildmode=list:longest,list:full
+
+"" Include user's local vim config
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
+

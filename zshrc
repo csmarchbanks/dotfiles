@@ -56,9 +56,6 @@ plugins=(git kubectl)
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH=~/bin:$PATH
 export PATH=$PATH":/usr/local/go/bin:"$HOME"/go/bin"
-eval `/usr/libexec/path_helper -s`
-
-# export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -69,7 +66,7 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='nvim'
+  export EDITOR='vim'
 fi
 
 # Compilation flags
@@ -94,3 +91,6 @@ precmd() {
 
 
 alias gs='git status'
+
+# load ~/.zshrc.local
+[[ -s $HOME/.zshrc.local ]] && source "$HOME/.zshrc.local"
