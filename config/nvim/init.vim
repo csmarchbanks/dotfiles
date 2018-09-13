@@ -31,6 +31,7 @@ call plug#end()
 set nocompatible
 syntax on
 filetype plugin indent on
+set backspace=indent,eol,start
 
 " airline config
 let g:airline#extensions#tabline#enabled = 1
