@@ -18,3 +18,5 @@
 [user]
 	email = csmarchbanks@gmail.com
 	name = Chris Marchbanks
+[core]
+        excludesfile = ~/.gitignore
