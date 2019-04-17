@@ -27,6 +27,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'wincent/terminus'
 Plug 'vimwiki/vimwiki'
 Plug 'vim-scripts/grep.vim'
+Plug 'tmux-plugins/vim-tmux-focus-events'
 call plug#end()
 set nocompatible
 syntax on
@@ -37,6 +38,10 @@ set backspace=indent,eol,start
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme="minimalist"
 let g:airline_powerline_fonts = 1
+
+" autoread config
+set autoread
+au FocusGained,BufEnter * :checktime
 
 " ale config
 let g:ale_sign_error = '⤫'
