@@ -1,11 +1,16 @@
 #!/bin/bash
+set -e
 
 link_file () {
   local src=$1 dst=$2
-  if [ -f "$dst" ]; then
+  if [ -f "$dst" ] && [ ! -L "$dst" ]; then
+    echo "Backing up $dst to $dst.bkp"
     mv "$dst" "$dst.bkp"
   fi
-  ln -s $src $dst
+  if [ ! -f "$dst" ]; then
+    echo "Linking $dst to $src"
+    ln -s $src $dst
+  fi
 }
 
 # install dependencies
@@ -13,18 +18,22 @@ if [ "$(uname -s)" == "Darwin" ]; then
   brew tap homebrew/bundle
   brew bundle
 elif [ $(awk -F= '/^NAME/{print $2}' /etc/os-release | tr -d '"') == "Ubuntu" ]; then
-  bin/ubuntu.sh
+  ./ubuntu-deps.sh
 fi
 
 # install vim-plug for neovim
-PLUG_FILE=~/.local/share/nvim/site/autoload/plug.vim
+PLUG_FILE=$HOME/.local/share/nvim/site/autoload/plug.vim
 if [ ! -f $PLUG_FILE ]; then
+  echo "Installing vim-plug"
   curl -fLo $PLUG_FILE --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
 # install oh-my-zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  echo "Installing oh-my-zsh"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+fi
 
 link_file `pwd`/tmux.conf ~/.tmux.conf
 

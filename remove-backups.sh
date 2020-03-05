@@ -1,3 +1,3 @@
 #!/bin/bash
 
-rm ~/.zshrc.bkp ~/.tmux*.conf.bkp ~/.config/nvim/init.vim.bkp
+rm ~/.{zshrc,tmux.conf,config/nvim/init.vim,vimrc,gitignore,gitconfig}.bkp
