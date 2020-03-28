@@ -56,6 +56,7 @@ plugins=(git kubectl)
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export PATH=~/bin:$PATH
 export PATH=$PATH":/usr/local/go/bin:"$HOME"/go/bin"
+export PATH="$PATH:$HOME/.cargo/bin"
 
 source $ZSH/oh-my-zsh.sh
 
