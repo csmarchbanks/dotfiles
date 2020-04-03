@@ -3,6 +3,7 @@ let g:coc_global_extensions=[
 \ 'coc-json',
 \ 'coc-rls',
 \ 'coc-tsserver',
+\ 'coc-tsserver',
 \ ]
 
 call plug#begin()
@@ -27,6 +28,7 @@ Plug 'vimwiki/vimwiki'
 Plug 'vim-scripts/grep.vim'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'sheerun/vim-polyglot'
 Plug 'rust-lang/rust.vim'
 call plug#end()
 set nocompatible
@@ -269,8 +271,8 @@ augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+"xmap <leader>a  <Plug>(coc-codeaction-selected)
+"nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current line.
 nmap <leader>ac  <Plug>(coc-codeaction)
