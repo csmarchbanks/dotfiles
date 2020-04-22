@@ -17,7 +17,7 @@ link_file () {
 if [ "$(uname -s)" == "Darwin" ]; then
   brew tap homebrew/bundle
   brew bundle
-elif [ $(awk -F= '/^NAME/{print $2}' /etc/os-release | tr -d '"') == "Ubuntu" ]; then
+elif [ $(awk -F= '/^ID_LIKE/{print $2}' /etc/os-release | tr -d '"') == "debian" ]; then
   ./ubuntu-deps.sh
 fi
 

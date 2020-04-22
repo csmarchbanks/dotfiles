@@ -4,6 +4,7 @@ let g:coc_global_extensions=[
 \ 'coc-rls',
 \ 'coc-tsserver',
 \ 'coc-tsserver',
+\ 'coc-texlab',
 \ ]
 
 call plug#begin()
@@ -30,6 +31,7 @@ Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'sheerun/vim-polyglot'
 Plug 'rust-lang/rust.vim'
+Plug 'lervag/vimtex'
 call plug#end()
 set nocompatible
 syntax on
@@ -76,6 +78,7 @@ autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype typescript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype jsonnet setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType make setlocal noexpandtab
+autocmd FileType tex setlocal spell
 set ignorecase
 set smartcase
 set autowrite
