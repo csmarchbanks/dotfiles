@@ -43,7 +43,6 @@ set backspace=indent,eol,start
 " airline config
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme="minimalist"
-let g:airline_powerline_fonts = 1
 
 " autoread config
 set autoread
@@ -144,6 +143,7 @@ autocmd FileType go nmap <Leader>i <Plug>(go-info)
 " rust config
 autocmd FileType rust nmap <leader>r  :RustRun<CR>
 autocmd FileType rust nmap <leader>t  :RustTest<CR>
+autocmd FileType rust nmap <leader>ta :RustTest!<CR>
 let g:rustfmt_autosave = 1
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
