@@ -10,7 +10,7 @@ let g:coc_global_extensions=[
 
 call plug#begin()
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plug 'fatih/molokai'
+Plug 'arcticicestudio/nord-vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
@@ -35,14 +35,16 @@ Plug 'lervag/vimtex'
 Plug 'mileszs/ack.vim'
 Plug 'hashivim/vim-terraform'
 call plug#end()
-set nocompatible
+
 syntax on
+colorscheme nord
+
+set nocompatible
 filetype plugin indent on
 set backspace=indent,eol,start
 
 " airline config
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme="minimalist"
 
 " autoread config
 set autoread
@@ -72,10 +74,6 @@ if executable('rg')
 endif
 
 let g:go_snippet_engine = "neosnippet"
-
-let g:rehash256 = 1
-let g:molokai_original = 1
-colorscheme molokai
 
 let mapleader = ","
 set number

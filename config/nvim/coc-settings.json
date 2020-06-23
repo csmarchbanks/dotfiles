@@ -5,7 +5,12 @@
       "rootPatterns": ["go.mod"],
       "disableWorkspaceFolders": true,
       "filetypes": ["go"]
-    }
+    },
+    "terraform": {
+      "command": "terraform-lsp",
+      "filetypes": ["terraform"],
+      "initializationOptions": {}
+    },
   },
   "diagnostic.displayByAle": true,
 }
