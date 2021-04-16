@@ -34,6 +34,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'lervag/vimtex'
 Plug 'mileszs/ack.vim'
 Plug 'hashivim/vim-terraform'
+Plug 'psf/black', { 'branch': 'stable' }
 call plug#end()
 
 syntax on
@@ -78,9 +79,15 @@ let g:go_snippet_engine = "neosnippet"
 let mapleader = ","
 set number
 autocmd FileType * setlocal tabstop=2|set shiftwidth=2|set expandtab
+
 autocmd FileType go setlocal tabstop=4|set noexpandtab|set shiftwidth=4 
+autocmd FileType go let b:coc_root_patterns = ['.git', 'go.mod']
+
 autocmd FileType rust setlocal tabstop=4|set expandtab|set shiftwidth=4
+
 autocmd FileType python setlocal tabstop=4|set expandtab|set shiftwidth=4
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
+
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype typescript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype jsonnet setlocal ts=2 sts=2 sw=2 expandtab
@@ -137,6 +144,8 @@ autocmd Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 autocmd FileType go nmap <Leader>i <Plug>(go-info)
 " let g:go_auto_type_info = 1
 " let g:go_auto_sameids = 1
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 
 " rust config
 autocmd FileType rust nmap <leader>r  :RustRun<CR>
@@ -320,3 +329,4 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+

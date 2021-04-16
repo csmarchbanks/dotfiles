@@ -3,14 +3,16 @@
     "golang": {
       "command": "gopls",
       "rootPatterns": ["go.mod"],
-      "disableWorkspaceFolders": true,
-      "filetypes": ["go"]
+      "filetypes": ["go"],
+      "initializationOptions": {
+        "usePlaceholders": true
+      }
     },
     "terraform": {
       "command": "terraform-lsp",
       "filetypes": ["terraform"],
       "initializationOptions": {}
-    },
+    }
   },
   "diagnostic.displayByAle": true,
 }
