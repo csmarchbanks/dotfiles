@@ -102,6 +102,8 @@ let g:go_autodetect_gopath = 1
 map <C-n> :cnext<CR>
 map <C-m> :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
+" Use coc's documentation viewer instead of vim-go
+let g:go_doc_keywordprg_enabled = 0
 
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
