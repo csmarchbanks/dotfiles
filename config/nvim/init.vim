@@ -86,7 +86,7 @@ autocmd FileType go let b:coc_root_patterns = ['.git', 'go.mod']
 autocmd FileType rust setlocal tabstop=4|set expandtab|set shiftwidth=4
 
 autocmd FileType python setlocal tabstop=4|set expandtab|set shiftwidth=4
-autocmd FileType python let b:coc_root_patterns = ['.git', '.env']
+autocmd FileType python let b:coc_root_patterns = ['.git', '.poetry.lock', '.env', 'venv', '.venv', 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json']
 
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype typescript setlocal ts=2 sts=2 sw=2 expandtab
