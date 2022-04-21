@@ -16,9 +16,8 @@
   "workspace.workspaceFolderCheckCwd": false,
   "workspace.bottomUpFiletypes": [
     "python",
-    "go",
+    "go"
   ],
   "python.pythonPath": "python3",
-  "diagnostic.displayByAle": true,
-  "coc.preferences.useQuickfixForLocations": true,
+  "coc.preferences.useQuickfixForLocations": true
 }

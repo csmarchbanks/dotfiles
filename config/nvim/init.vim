@@ -15,7 +15,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'w0rp/ale'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'tpope/vim-fugitive'
@@ -34,7 +33,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'lervag/vimtex'
 Plug 'mileszs/ack.vim'
 Plug 'hashivim/vim-terraform'
-Plug 'psf/black', { 'branch': 'stable' }
+Plug 'psf/black'
 call plug#end()
 
 syntax on
@@ -51,10 +50,7 @@ let g:airline#extensions#tabline#enabled = 1
 set autoread
 au FocusGained,BufEnter * :checktime
 
-" ale config
-let g:ale_sign_error = '⤫'
-let g:ale_sign_warning = '⚠'
-let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#coc#enabled = 1
 
 " deoplete/neosnippet config
 let g:deoplete#auto_complete_start_length = 1
