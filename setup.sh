@@ -23,14 +23,6 @@ else
   echo "Unknown OS, not installing dependencies"
 fi
 
-# install vim-plug for neovim
-PLUG_FILE=$HOME/.local/share/nvim/site/autoload/plug.vim
-if [ ! -f $PLUG_FILE ]; then
-  echo "Installing vim-plug"
-  curl -fLo $PLUG_FILE --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-fi
-
 # install oh-my-zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
   echo "Installing oh-my-zsh"
@@ -42,10 +34,7 @@ link_file `pwd`/tmux.conf ~/.tmux.conf
 # neovim config
 mkdir -p ~/.config/alacritty
 link_file `pwd`/config/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
-mkdir -p ~/.config/nvim
-link_file `pwd`/config/nvim/init.vim ~/.config/nvim/init.vim
-link_file `pwd`/config/nvim/init.vim ~/.vimrc
-link_file `pwd`/config/nvim/coc-settings.json ~/.config/nvim/coc-settings.json
+link_file `pwd`/config/nvim ~/.config/nvim
 link_file `pwd`/zshrc ~/.zshrc
 link_file `pwd`/gitconfig ~/.gitconfig
 link_file `pwd`/gitignore ~/.gitignore
