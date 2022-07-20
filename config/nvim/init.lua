@@ -16,6 +16,11 @@ require('packer').startup(function(use)
   -- UI to select things (files, grep results, open buffers...)
   use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate'
+  }
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'airblade/vim-gitgutter'
   use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
   use 'hrsh7th/cmp-nvim-lsp'
@@ -284,3 +289,85 @@ vim.keymap.set('n', '<leader>so', function()
   require('telescope.builtin').tags { only_current_buffer = true }
 end)
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles)
+
+-- Treesitter config
+require "nvim-treesitter.configs".setup {
+  ensure_installed = { "c", "cpp", "go", "lua", "rust", "typescript" },
+
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      -- mappings for incremental selection (visual mappings)
+      init_selection = "gnn", -- maps in normal mode to init the node/scope selection
+      node_incremental = "grn", -- increment to the upper named parent scope_incremental = "grc", -- increment to the upper scope (as defined in locals.scm)
+      node_decremental = "grm" -- decrement to the previous node
+    }
+  },
+
+  textobjects = {
+    -- syntax-aware textobjects
+    enable = true,
+    lsp_interop = {
+      enable = true,
+      peek_definition_code = {
+        ["DF"] = "@function.outer",
+        ["DF"] = "@class.outer"
+      }
+    },
+    keymaps = {
+      ["af"] = "@function.outer",
+      ["if"] = "@function.inner",
+      ["aC"] = "@class.outer",
+      ["iC"] = "@class.inner",
+      ["ac"] = "@conditional.outer",
+      ["ic"] = "@conditional.inner",
+      ["ae"] = "@block.outer",
+      ["ie"] = "@block.inner",
+      ["al"] = "@loop.outer",
+      ["il"] = "@loop.inner",
+      ["is"] = "@statement.inner",
+      ["as"] = "@statement.outer",
+      ["ad"] = "@comment.outer",
+      ["am"] = "@call.outer",
+      ["im"] = "@call.inner"
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer"
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer"
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer"
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer"
+      }
+    },
+    select = {
+      enable = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      }
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ["<leader>a"] = "@parameter.inner"
+      },
+      swap_previous = {
+        ["<leader>A"] = "@parameter.inner"
+      }
+    }
+  }
+}
