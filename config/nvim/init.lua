@@ -89,8 +89,6 @@ vim.api.nvim_command [[
 autocmd FileType rust setlocal tabstop=4|set expandtab|set shiftwidth=4
 autocmd FileType python setlocal tabstop=4|set expandtab|set shiftwidth=4
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-autocmd Filetype typescript setlocal ts=2 sts=2 sw=2 expandtab
-autocmd Filetype jsonnet setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType make setlocal noexpandtab
 autocmd FileType tex setlocal spell
 autocmd FileType text setlocal noexpandtab
