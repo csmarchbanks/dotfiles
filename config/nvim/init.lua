@@ -77,7 +77,7 @@ vim.api.nvim_set_var('airline#extensions#tabline#enabled', 1)
 -- quickfix shortcuts
 vim.api.nvim_set_keymap('n', '<C-j>', ':cnext<CR>', {})
 vim.api.nvim_set_keymap('n', '<C-k>', ':cprevious<CR>', {})
-vim.api.nvim_set_keymap('n', '<leader>a', ':cclose<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>a', ':cclose<CR>', {})
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -361,10 +361,11 @@ require "nvim-treesitter.configs".setup {
     swap = {
       enable = true,
       swap_next = {
-        ["<leader>a"] = "@parameter.inner"
+        ["<leader>sw"] = "@parameter.inner",
       },
       swap_previous = {
-        ["<leader>A"] = "@parameter.inner"
+        ["<leader>SW"] = "@parameter.inner",
+        ["<leader>Sw"] = "@parameter.inner",
       }
     }
   }
