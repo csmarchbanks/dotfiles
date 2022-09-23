@@ -53,10 +53,9 @@ plugins=(git kubectl dotenv)
 
 # User configuration
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-export PATH=~/bin:$PATH
-export PATH=$PATH":/usr/local/go/bin:"$HOME"/go/bin"
-export PATH="$PATH:$HOME/.cargo/bin"
+export -U PATH=~/bin:$PATH
+export -U PATH=$PATH":/usr/local/go/bin:"$HOME"/go/bin"
+export -U PATH="$PATH:$HOME/.cargo/bin"
 
 source $ZSH/oh-my-zsh.sh
 
