@@ -1,11 +1,11 @@
 -- -- setup nvim-go
 require('go').setup({
-  auto_format = true,
-  auto_lint = true,
-  linter = 'golangci-lint',
-  lint_prompt_style = 'vt',
-  formatter = 'goimports',
-  test_popup_auto_leave = true,
+	auto_format = true,
+	auto_lint = true,
+	linter = 'golangci-lint',
+	lint_prompt_style = 'vt',
+	formatter = 'goimports',
+	test_popup_auto_leave = true,
 })
 
 vim.opt_local.tabstop = 4
