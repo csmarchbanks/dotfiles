@@ -33,9 +33,10 @@ require('packer').startup(function(use)
 	use 'L3MON4D3/LuaSnip' -- Snippets plugin
 	use 'vim-airline/vim-airline'
 	use 'vim-airline/vim-airline-themes'
-	use 'crispgm/nvim-go'
+	use 'fatih/vim-go'
 	use 'google/vim-jsonnet'
 	use 'hashivim/vim-terraform'
+	use 'psf/black'
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
@@ -129,7 +130,7 @@ end
 
 -- nvim-cmp supports additional completion capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Enable the following language servers
 local servers = { 'clangd', 'gopls', 'jsonls', 'jsonnet_ls', 'rust_analyzer', 'terraformls', 'tsserver' }
@@ -149,7 +150,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-lspconfig.sumneko_lua.setup {
+lspconfig.lua_ls.setup {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {

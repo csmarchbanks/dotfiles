@@ -54,8 +54,9 @@ plugins=(git kubectl dotenv nvm)
 # User configuration
 
 export -U PATH=~/bin:$PATH
-export -U PATH=$PATH":/usr/local/go/bin:"$HOME"/go/bin"
+export -U PATH=$PATH":/usr/local/go/bin:"$HOME"/go/bin":"$HOME"/.local/bin
 export -U PATH="$PATH:$HOME/.cargo/bin"
+export -U PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
