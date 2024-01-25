@@ -33,7 +33,7 @@ link_file `pwd`/tmux.conf ~/.tmux.conf
 
 # neovim config
 mkdir -p ~/.config/alacritty
-link_file `pwd`/config/alacritty/alacritty.toml ~/.config/alacritty/alacritty.toml
+link_file `pwd`/config/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
 link_file `pwd`/config/nvim ~/.config/nvim
 link_file `pwd`/zshrc ~/.zshrc
 link_file `pwd`/gitconfig ~/.gitconfig
