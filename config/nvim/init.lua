@@ -16,7 +16,7 @@ require('packer').startup(function(use)
 	use 'williamboman/mason.nvim'
 	use 'williamboman/mason-lspconfig.nvim'
 	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
-	use 'arcticicestudio/nord-vim'
+	use "rebelot/kanagawa.nvim"
 	use 'tpope/vim-fugitive' -- Git commands in nvim
 	-- UI to select things (files, grep results, open buffers...)
 	use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
@@ -31,8 +31,11 @@ require('packer').startup(function(use)
 	use 'hrsh7th/cmp-nvim-lsp'
 	use 'saadparwaiz1/cmp_luasnip'
 	use 'L3MON4D3/LuaSnip' -- Snippets plugin
-	use 'vim-airline/vim-airline'
-	use 'vim-airline/vim-airline-themes'
+	use 'akinsho/bufferline.nvim'
+	use {
+		'nvim-lualine/lualine.nvim',
+		requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+	}
 	use 'fatih/vim-go'
 	use 'google/vim-jsonnet'
 	use 'hashivim/vim-terraform'
@@ -68,7 +71,7 @@ vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
-vim.cmd [[colorscheme nord]]
+vim.cmd("colorscheme kanagawa")
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -76,10 +79,15 @@ vim.o.completeopt = 'menuone,noselect'
 -- Map comma as the leader key
 vim.g.mapleader = ','
 
--- Airline config
-vim.api.nvim_set_var('airline#extensions#tabline#enabled', 1)
+-- Bufferline config
+vim.opt.termguicolors = true
+require("bufferline").setup{}
 
+-- Lualine config
+require('lualine').setup{}
 
+vim.opt.termguicolors = true
+require("bufferline").setup{}
 -- quickfix shortcuts
 vim.api.nvim_set_keymap('n', '<C-j>', ':cnext<CR>', {})
 vim.api.nvim_set_keymap('n', '<C-k>', ':cprevious<CR>', {})
@@ -125,7 +133,6 @@ local on_attach = function(_, bufnr)
 	vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
 	vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
 	vim.keymap.set('n', '<leader>so', require('telescope.builtin').lsp_document_symbols, opts)
-	vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 end
 
 -- nvim-cmp supports additional completion capabilities
