@@ -58,6 +58,9 @@ export -U PATH=$PATH":/usr/local/go/bin:"$HOME"/go/bin":"$HOME"/.local/bin
 export -U PATH="$PATH:$HOME/.cargo/bin"
 export -U PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
+# Automatically switch node versions when a .nvmrc file is present.
+zstyle ':omz:plugins:nvm' autoload true
+
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
@@ -65,9 +68,9 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
+  export EDITOR='nvim'
 else
-  export EDITOR='vim'
+  export EDITOR='nvim'
 fi
 
 # Compilation flags

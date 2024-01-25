@@ -1,4 +1,3 @@
-tap 'homebrew/cask'
 cask 'alacritty'
 
 brew 'neovim'
