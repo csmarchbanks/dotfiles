@@ -40,6 +40,9 @@ require('packer').startup(function(use)
 	use 'google/vim-jsonnet'
 	use 'hashivim/vim-terraform'
 	use 'psf/black'
+	use 'mfussenegger/nvim-dap'
+	use 'leoluz/nvim-dap-go'
+	use 'theHamsta/nvim-dap-virtual-text'
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
@@ -95,8 +98,14 @@ require('lualine').setup {
 	}
 }
 
-vim.opt.termguicolors = true
-require("bufferline").setup{}
+-- dap shortcuts
+require("nvim-dap-virtual-text").setup()
+vim.api.nvim_set_keymap('n', '<leader>db', ':lua require"dap".toggle_breakpoint()<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>dc', ':lua require"dap".continue()<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>di', ':lua require"dap".step_into()<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>do', ':lua require"dap".step_over()<CR>', {})
+vim.api.nvim_set_keymap('n', '<leader>dv', ':lua require"dap".repl.open()<CR>', {})
+
 -- quickfix shortcuts
 vim.api.nvim_set_keymap('n', '<C-j>', ':cnext<CR>', {})
 vim.api.nvim_set_keymap('n', '<C-k>', ':cprevious<CR>', {})
