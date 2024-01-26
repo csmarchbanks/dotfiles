@@ -3,3 +3,5 @@
 .DS_Store?
 /.env
 /.vscode
+/go.work
+/go.work.sum
