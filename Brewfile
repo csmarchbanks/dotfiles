@@ -1,5 +1,7 @@
 cask 'alacritty'
-cask 'fira-code-nerd-font'
+cask 'wezterm'
+
+cask 'font-fira-code-nerd-font'
 
 brew 'neovim'
 brew 'coreutils'
