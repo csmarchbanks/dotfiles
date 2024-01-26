@@ -81,10 +81,19 @@ vim.g.mapleader = ','
 
 -- Bufferline config
 vim.opt.termguicolors = true
-require("bufferline").setup{}
+require("bufferline").setup {}
 
 -- Lualine config
-require('lualine').setup{}
+require('lualine').setup {
+	sections = {
+		lualine_c = {
+			{
+				'filename',
+				path = 1,
+			}
+		}
+	}
+}
 
 vim.opt.termguicolors = true
 require("bufferline").setup{}
@@ -100,13 +109,15 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist)
 
 -- Per-language settings
 vim.api.nvim_command [[
-autocmd FileType rust setlocal tabstop=4|set expandtab|set shiftwidth=4
-autocmd FileType python setlocal tabstop=4|set expandtab|set shiftwidth=4
+autocmd FileType rust setlocal set expandtab
+autocmd FileType python setlocal set expandtab
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType make setlocal noexpandtab
 autocmd FileType tex setlocal spell
 autocmd FileType text setlocal noexpandtab
 ]]
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 
 -- LSP settings
 require("mason").setup()
