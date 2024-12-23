@@ -79,6 +79,10 @@ vim.cmd("colorscheme kanagawa")
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
+-- Default tab options
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+
 -- Map comma as the leader key
 vim.g.mapleader = ','
 
@@ -115,18 +119,6 @@ vim.api.nvim_set_keymap('n', '<leader>a', ':cclose<CR>', {})
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist)
-
--- Per-language settings
-vim.api.nvim_command [[
-autocmd FileType rust setlocal set expandtab
-autocmd FileType python setlocal set expandtab
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType make setlocal noexpandtab
-autocmd FileType tex setlocal spell
-autocmd FileType text setlocal noexpandtab
-]]
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
 
 -- LSP settings
 require("mason").setup()
