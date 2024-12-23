@@ -43,6 +43,13 @@ require('packer').startup(function(use)
 	use 'mfussenegger/nvim-dap'
 	use 'leoluz/nvim-dap-go'
 	use 'theHamsta/nvim-dap-virtual-text'
+	use 'NoahTheDuke/vim-just'
+	use {
+		'numToStr/Comment.nvim',
+		config = function()
+			require('Comment').setup()
+		end
+	}
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
@@ -152,13 +159,44 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 -- Enable the following language servers
-local servers = { 'clangd', 'gopls', 'jsonls', 'jsonnet_ls', 'rust_analyzer', 'terraformls', 'tsserver' }
+local servers = { 'gopls', 'jsonls', 'jsonnet_ls', 'terraformls', 'ts_ls' }
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup {
 		on_attach = on_attach,
 		capabilities = capabilities,
 	}
 end
+
+lspconfig.rust_analyzer.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	settings = {
+        ['rust-analyzer'] = {
+            check = {
+                command = "clippy";
+            },
+            diagnostics = {
+                enable = true;
+            }
+        }
+    }
+}
+
+lspconfig.clangd.setup {
+	on_attach = on_attach,
+	capabilities = capabilities,
+	cmd = {
+		"clangd",
+		"--background-index",
+		"--clang-tidy",
+		"--completion-style=detailed",
+		"--enable-config",
+		"--fallback-style=llvm",
+		"--function-arg-placeholders",
+		"--header-insertion=iwyu",
+		"--all-scopes-completion",
+	},
+}
 
 local util = require 'lspconfig/util'
 local path = util.path
