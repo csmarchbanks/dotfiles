@@ -245,26 +245,35 @@ local function get_python_path(workspace)
 
 	-- Find and use virtualenv in workspace directory.
 	for _, pattern in ipairs({ '*', '.*' }) do
-		local match = vim.fn.glob(path.join(workspace, pattern, 'pyproject.toml'))
+		local match = vim.fn.glob(path.join(workspace, pattern, 'uv.lock'))
 		if match ~= '' then
-			--print('Found pyproject.toml at ' .. match)
+			-- print('Found uv.lock at ' .. match)
+			local dir = match:match("(.*)[/\\]uv.lock")
+			local py = path.join(dir, '.venv', 'bin', 'python')
+			-- print('Using uv Python at ' .. py)
+			return py
+		end
+
+		local match = vim.fn.glob(path.join(workspace, pattern, 'poetry.lock'))
+		if match ~= '' then
+			-- print('Found poetry.lock at ' .. match)
 			local dir = match:match("(.*[/\\])")
 			local command = 'cd ' .. dir .. ' && poetry env list --full-path --no-ansi'
-			--print('Running: ' .. command)
+			-- print('Running: ' .. command)
 			local file = io.popen(command, 'r')
 			local output = file:read("*a")
-			--print('output: ' .. output)
+			-- print('output: ' .. output)
 			file:close()
 			-- Remove trailing newline
 			output = output:match '^%s*(%S*)'
 			local py = path.join(output, 'bin', 'python')
-			--print('Using Poetry Python at ' .. py)
+			-- print('Using Poetry Python at ' .. py)
 			return py
 		end
 	end
 
 	-- Fallback to system Python.
-	--print('Using system python')
+	-- print('Using system python')
 	return 'python3'
 end
 
