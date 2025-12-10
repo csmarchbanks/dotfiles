@@ -131,9 +131,9 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist)
 require("mason").setup()
 require("mason-lspconfig").setup({
 	automatic_installation = true,
+	automatic_enable = false,
 })
 
-local lspconfig = require 'lspconfig'
 local on_attach = function(_, bufnr)
 	local opts = { buffer = bufnr }
 	vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
@@ -161,13 +161,13 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 -- Enable the following language servers
 local servers = { 'gopls', 'jsonls', 'jsonnet_ls', 'terraformls', 'ts_ls' }
 for _, lsp in ipairs(servers) do
-	lspconfig[lsp].setup {
+	vim.lsp.config(lsp, {
 		on_attach = on_attach,
 		capabilities = capabilities,
-	}
+	})
 end
 
-lspconfig.rust_analyzer.setup {
+vim.lsp.config("rust_analyzer", {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
@@ -180,9 +180,9 @@ lspconfig.rust_analyzer.setup {
             }
         }
     }
-}
+})
 
-lspconfig.clangd.setup {
+vim.lsp.config("clangd", {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	cmd = {
@@ -196,7 +196,7 @@ lspconfig.clangd.setup {
 		"--header-insertion=iwyu",
 		"--all-scopes-completion",
 	},
-}
+})
 
 local util = require 'lspconfig/util'
 local path = util.path
@@ -207,7 +207,7 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-lspconfig.lua_ls.setup {
+vim.lsp.config("lua_ls", {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	settings = {
@@ -232,7 +232,7 @@ lspconfig.lua_ls.setup {
 			},
 		},
 	},
-}
+})
 
 -- Enable python separately as it needs a before_init to find the python path.
 local function get_python_path(workspace)
@@ -277,7 +277,7 @@ local function get_python_path(workspace)
 	return 'python3'
 end
 
-lspconfig.pyright.setup {
+vim.lsp.config("pyright", {
 	on_attach = on_attach,
 	capabilities = capabilities,
 	before_init = function(_, config)
@@ -288,7 +288,7 @@ lspconfig.pyright.setup {
 			autoImportCompletions = true,
 		},
 	}
-}
+})
 
 -- luasnip setup
 local luasnip = require 'luasnip'
