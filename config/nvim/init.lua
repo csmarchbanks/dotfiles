@@ -166,6 +166,7 @@ for _, lsp in ipairs(servers) do
 		capabilities = capabilities,
 	})
 end
+vim.lsp.enable(servers)
 
 vim.lsp.config("rust_analyzer", {
 	on_attach = on_attach,
@@ -181,6 +182,7 @@ vim.lsp.config("rust_analyzer", {
         }
     }
 })
+vim.lsp.enable("rust_analyzer")
 
 vim.lsp.config("clangd", {
 	on_attach = on_attach,
@@ -197,6 +199,7 @@ vim.lsp.config("clangd", {
 		"--all-scopes-completion",
 	},
 })
+vim.lsp.enable("clangd")
 
 local util = require 'lspconfig/util'
 local path = util.path
@@ -233,6 +236,7 @@ vim.lsp.config("lua_ls", {
 		},
 	},
 })
+vim.lsp.enable("lua_ls")
 
 -- Enable python separately as it needs a before_init to find the python path.
 local function get_python_path(workspace)
@@ -289,6 +293,7 @@ vim.lsp.config("pyright", {
 		},
 	}
 })
+vim.lsp.enable("pyright")
 
 -- luasnip setup
 local luasnip = require 'luasnip'
