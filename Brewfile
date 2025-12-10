@@ -1,5 +1,6 @@
 cask 'alacritty'
 cask 'wezterm'
+cask 'ghostty'
 
 cask 'font-fira-code-nerd-font'
 

@@ -15,7 +15,6 @@ link_file () {
 
 # install dependencies
 if [ "$(uname -s)" == "Darwin" ]; then
-  brew tap homebrew/bundle
   brew bundle
 elif [ ""$(awk -F= '/^ID_LIKE/{print $2}' /etc/os-release | tr -d '"') == "debian" ]; then
   ./ubuntu-deps.sh
@@ -36,6 +35,8 @@ mkdir -p ~/.config/alacritty
 link_file `pwd`/config/alacritty/alacritty.yml ~/.config/alacritty/alacritty.yml
 mkdir -p ~/.config/wezterm
 link_file `pwd`/config/wezterm/wezterm.lua ~/.config/wezterm/wezterm.lua
+mkdir -p ~/.config/ghostty
+link_file `pwd`/config/ghostty/config ~/.config/ghostty/config
 link_file `pwd`/config/nvim ~/.config/nvim
 link_file `pwd`/zshrc ~/.zshrc
 link_file `pwd`/gitconfig ~/.gitconfig
