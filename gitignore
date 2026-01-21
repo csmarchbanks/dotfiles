@@ -3,5 +3,7 @@
 .DS_Store?
 /.env
 /.vscode
+.claude
 /go.work
 /go.work.sum
+.python-version

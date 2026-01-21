@@ -1,62 +1,24 @@
--- Install packer
-local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
-local packer_bootstrap = nil
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-	packer_bootstrap = vim.fn.system({
-		'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path,
-	})
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
+vim.opt.rtp:prepend(lazypath)
 
-local packer_group = vim.api.nvim_create_augroup('Packer', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePost',
-	{ command = 'source <afile> | PackerCompile', group = packer_group, pattern = 'init.lua' })
-
-require('packer').startup(function(use)
-	use 'wbthomason/packer.nvim' -- Package manager
-	use 'williamboman/mason.nvim'
-	use 'williamboman/mason-lspconfig.nvim'
-	use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
-	use "rebelot/kanagawa.nvim"
-	use 'tpope/vim-fugitive' -- Git commands in nvim
-	-- UI to select things (files, grep results, open buffers...)
-	use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
-	use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		run = ':TSUpdate'
-	}
-	use 'nvim-treesitter/nvim-treesitter-textobjects'
-	use 'airblade/vim-gitgutter'
-	use 'hrsh7th/nvim-cmp' -- Autocompletion plugin
-	use 'hrsh7th/cmp-nvim-lsp'
-	use 'saadparwaiz1/cmp_luasnip'
-	use 'L3MON4D3/LuaSnip' -- Snippets plugin
-	use 'akinsho/bufferline.nvim'
-	use {
-		'nvim-lualine/lualine.nvim',
-		requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-	}
-	use 'fatih/vim-go'
-	use 'google/vim-jsonnet'
-	use 'hashivim/vim-terraform'
-	use 'psf/black'
-	use 'mfussenegger/nvim-dap'
-	use 'leoluz/nvim-dap-go'
-	use 'theHamsta/nvim-dap-virtual-text'
-	use 'NoahTheDuke/vim-just'
-	use {
-		'numToStr/Comment.nvim',
-		config = function()
-			require('Comment').setup()
-		end
-	}
-
-	-- Automatically set up your configuration after cloning packer.nvim
-	-- Put this at the end after all plugins
-	if packer_bootstrap then
-		require('packer').sync()
-	end
-end)
+-- Make sure to setup `mapleader` and `maplocalleader` before
+-- loading lazy.nvim so that mappings are correct.
+-- This is also a good place to setup other settings (vim.opt)
+vim.g.mapleader = ','
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -80,9 +42,6 @@ vim.opt.undofile = true
 vim.o.updatetime = 250
 vim.wo.signcolumn = 'yes'
 
--- Set colorscheme
-vim.cmd("colorscheme kanagawa")
-
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
@@ -90,24 +49,113 @@ vim.o.completeopt = 'menuone,noselect'
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 
--- Map comma as the leader key
-vim.g.mapleader = ','
-
--- Bufferline config
-vim.opt.termguicolors = true
-require("bufferline").setup {}
-
--- Lualine config
-require('lualine').setup {
-	sections = {
-		lualine_c = {
-			{
-				'filename',
-				path = 1,
+require('lazy').setup({
+	spec = {
+		{
+			"mason-org/mason-lspconfig.nvim",
+			opts = {
+				ensure_installed = {"gopls", "lua_ls", "jsonls", "jsonnet_ls", "terraformls", "ts_ls", "rust_analyzer", "clangd"},
+				automatic_installation = true,
+				automatic_enable = false,
+			},
+			dependencies = {
+				{ "mason-org/mason.nvim", opts = {} },
+				"neovim/nvim-lspconfig",
+			},
+		},
+		{
+			"rebelot/kanagawa.nvim",
+			lazy = false,
+			priority = 1000,
+			config = function()
+				vim.cmd("colorscheme kanagawa")
+			end
+		},
+		{ 'tpope/vim-fugitive' }, -- Git commands in nvim
+		-- UI to select things (files, grep results, open buffers...)
+		{
+			'nvim-telescope/telescope.nvim',
+			version = '*',
+			dependencies = {
+				'nvim-lua/plenary.nvim',
+				-- optional but recommended
+				{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+			},
+			config = function()
+				local builtin = require('telescope.builtin')
+				vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers)
+				vim.keymap.set('n', '<C-p>', function()
+					   require('telescope.builtin').find_files { previewer = false }
+				end)
+				vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+				vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+				vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+				vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+				vim.keymap.set('n', '<leader>?', builtin.oldfiles)
+				vim.keymap.set('n', '<leader>so', builtin.lsp_document_symbols)
+			end
+		},
+		{
+			'nvim-treesitter/nvim-treesitter',
+			lazy = false,
+			build = ':TSUpdate',
+			main = 'nvim-treesitter.config',
+			opts = {
+				ensure_installed = { "c", "cpp", "go", "lua", "rust",
+			"typescript" },
+				auto_install = true,
 			}
-		}
-	}
-}
+		},
+		{ 'airblade/vim-gitgutter' },
+		{ 'hrsh7th/nvim-cmp' },
+		{ 'hrsh7th/cmp-nvim-lsp' },
+		{ 'saadparwaiz1/cmp_luasnip' },
+		{ 'L3MON4D3/LuaSnip' },
+		{
+			'nvim-lualine/lualine.nvim',
+			dependencies = { 'nvim-tree/nvim-web-devicons' },
+			opts = {
+				sections = {
+					lualine_c = {
+						{
+							'filename',
+							path = 1,
+						}
+					}
+				},
+				tabline = {
+					lualine_a = {
+						{
+							'buffers',
+							mode = 4,
+						},
+					},
+					lualine_b = {},
+					lualine_c = {},
+					lualine_x = {},
+					lualine_y = {},
+					lualine_z = { 'lsp_status' }
+				},
+			},
+		},
+		{ 'fatih/vim-go' },
+		{ 'google/vim-jsonnet' },
+		{ 'hashivim/vim-terraform' },
+		{ 'psf/black' },
+		{ 'mfussenegger/nvim-dap' },
+		{ 'leoluz/nvim-dap-go' },
+		{ 'theHamsta/nvim-dap-virtual-text' },
+		{
+			'numToStr/Comment.nvim',
+			opts = {},
+		},
+	},
+	install = {
+		missing = true,
+	},
+	checker = { enabled = true },
+})
+
 
 -- dap shortcuts
 require("nvim-dap-virtual-text").setup()
@@ -128,11 +176,7 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setqflist)
 
 -- LSP settings
-require("mason").setup()
-require("mason-lspconfig").setup({
-	automatic_installation = true,
-	automatic_enable = false,
-})
+vim.lsp.set_log_level("off")
 
 local on_attach = function(_, bufnr)
 	local opts = { buffer = bufnr }
@@ -151,7 +195,6 @@ local on_attach = function(_, bufnr)
 	vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
 	vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
 	vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
-	vim.keymap.set('n', '<leader>so', require('telescope.builtin').lsp_document_symbols, opts)
 end
 
 -- nvim-cmp supports additional completion capabilities
@@ -335,120 +378,4 @@ cmp.setup {
 	sources = {
 		{ name = 'nvim_lsp' },
 	},
-}
-
--- Telescope
-require('telescope').setup {
-	defaults = {
-		mappings = {
-			i = {
-				['<C-u>'] = false,
-				['<C-d>'] = false,
-			},
-		},
-	},
-}
-
--- Enable telescope fzf native
-require('telescope').load_extension 'fzf'
-
---Add leader shortcuts
-vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers)
-vim.keymap.set('n', '<leader>sf', function()
-	require('telescope.builtin').find_files { previewer = false }
-end)
-vim.keymap.set('n', '<C-p>', function()
-	require('telescope.builtin').find_files { previewer = false }
-end)
-vim.keymap.set('n', '<leader>sb', require('telescope.builtin').current_buffer_fuzzy_find)
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags)
-vim.keymap.set('n', '<leader>st', require('telescope.builtin').tags)
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').grep_string)
-vim.keymap.set('n', '<leader>sp', require('telescope.builtin').live_grep)
-vim.keymap.set('n', '<leader>so', function()
-	require('telescope.builtin').tags { only_current_buffer = true }
-end)
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles)
-
--- Treesitter config
-require "nvim-treesitter.configs".setup {
-	ensure_installed = { "c", "cpp", "go", "lua", "rust", "typescript" },
-
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-			-- mappings for incremental selection (visual mappings)
-			init_selection = "gnn", -- maps in normal mode to init the node/scope selection
-			node_incremental = "grn", -- increment to the upper named parent scope_incremental = "grc", -- increment to the upper scope (as defined in locals.scm)
-			node_decremental = "grm" -- decrement to the previous node
-		}
-	},
-
-	textobjects = {
-		-- syntax-aware textobjects
-		enable = true,
-		lsp_interop = {
-			enable = true,
-			peek_definition_code = {
-				["DF"] = "@function.outer",
-				["DF"] = "@class.outer"
-			}
-		},
-		keymaps = {
-			["af"] = "@function.outer",
-			["if"] = "@function.inner",
-			["aC"] = "@class.outer",
-			["iC"] = "@class.inner",
-			["ac"] = "@conditional.outer",
-			["ic"] = "@conditional.inner",
-			["ae"] = "@block.outer",
-			["ie"] = "@block.inner",
-			["al"] = "@loop.outer",
-			["il"] = "@loop.inner",
-			["is"] = "@statement.inner",
-			["as"] = "@statement.outer",
-			["ad"] = "@comment.outer",
-			["am"] = "@call.outer",
-			["im"] = "@call.inner"
-		},
-		move = {
-			enable = true,
-			set_jumps = true, -- whether to set jumps in the jumplist
-			goto_next_start = {
-				["]m"] = "@function.outer",
-				["]]"] = "@class.outer"
-			},
-			goto_next_end = {
-				["]M"] = "@function.outer",
-				["]["] = "@class.outer"
-			},
-			goto_previous_start = {
-				["[m"] = "@function.outer",
-				["[["] = "@class.outer"
-			},
-			goto_previous_end = {
-				["[M"] = "@function.outer",
-				["[]"] = "@class.outer"
-			}
-		},
-		select = {
-			enable = true,
-			keymaps = {
-				["af"] = "@function.outer",
-				["if"] = "@function.inner",
-				["ac"] = "@class.outer",
-				["ic"] = "@class.inner",
-			}
-		},
-		swap = {
-			enable = true,
-			swap_next = {
-				["<leader>sw"] = "@parameter.inner",
-			},
-			swap_previous = {
-				["<leader>SW"] = "@parameter.inner",
-				["<leader>Sw"] = "@parameter.inner",
-			}
-		}
-	}
 }
